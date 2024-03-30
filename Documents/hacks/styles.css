@@ -5,6 +5,19 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     box-sizing: border-box;
 }
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: #ffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+
+}
 body{
     background: #001e4d;
 }
@@ -63,9 +76,31 @@ body{
     cursor: pointer;
     display: block;
 }
-.correct{
-    background-color: #9aeabc;
+.clicked{
+    background-color: #3c6181;
 }
-.incorrect{
-    background-color: #ff9393;
+.logo {
+    font-size: 2em;
+    color: #FFFF00;
+    user-select: none;
+}
+.navigation a{
+    position: relative;
+    font-size: 1.1em;
+    color: #ffff;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+
+}
+
+.navigation .btnLogin-popup{
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px, solid #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1;
 }
