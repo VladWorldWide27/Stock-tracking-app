@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}Owner Dashboard{% endblock %}
+{% block body %}
+  <h2>Owner Dashboard</h2>
+  <div class="staff-section">
+    <h3>Create New Staff Account</h3>
+    <p><a href="{{ url_for('create_staff') }}">Create a new staff account</a></p>
+  </div>
+  
+  <div class="events-section">
+    <h3>Scheduled Events</h3>
+    {% if not events %}
+      <p><em>No events are currently scheduled.</em></p>
+    {% else %}
+      <ul class="events">
+      {% for event in events %}
+        <li>
+          <strong>{{ event.date.strftime('%Y-%m-%d') }}</strong>: {{ event.description }}
+          <br>Customer: {{ event.customer.username }}
+          <br>Staff assigned: 
+          {% if event.staff %}
+            <ul>
+            {% for staff_member in event.staff %}
+              <li>{{ staff_member.username }}</li>
+            {% endfor %}
+            </ul>
+          {% else %}
+            <em>No staff assigned yet!</em>
+          {% endif %}
+        </li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}

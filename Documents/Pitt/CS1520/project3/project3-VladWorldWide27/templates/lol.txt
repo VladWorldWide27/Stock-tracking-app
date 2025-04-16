@@ -1,0 +1,3 @@
+rm -f catering.db
+flask --app catering.py initdb
+flask --app catering.py run

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Chat Rooms{% endblock %}
+{% block body %}
+  <h2>Chat Rooms</h2>
+  
+  <div class="create-room">
+    <h3>Create New Room</h3>
+    <form action="{{ url_for('create_room') }}" method="post">
+      <dl>
+        <dt>Room Name:
+        <dd><input type="text" name="name" size="30" required>
+      </dl>
+      <div class="actions"><input type="submit" value="Create Room"></div>
+    </form>
+  </div>
+
+  <div class="rooms-list">
+    <h3>Available Rooms</h3>
+    {% if rooms %}
+      <ul class="rooms">
+        {% for room in rooms %}
+          <li>
+            <span class="room-name">{{ room.name }}</span>
+            <span class="room-creator">Created by: {{ room.creator.username }}</span>
+            <div class="room-actions">
+              <a href="{{ url_for('join_room', room_id=room.id) }}" class="button">Join Room</a>
+              {% if room.creator_id == g.user.id %}
+                <a href="{{ url_for('delete_room', room_id=room.id) }}" class="button delete" onclick="return confirm('Are you sure you want to delete this room?')">Delete Room</a>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No chat rooms available. Create one to get started!</p>
+    {% endif %}
+  </div>
+{% endblock %} 

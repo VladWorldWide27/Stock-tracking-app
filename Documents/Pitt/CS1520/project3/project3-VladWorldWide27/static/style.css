@@ -1,0 +1,214 @@
+body {
+  background: #E7E8D1; 
+  color: #333; 
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+  margin: 0 0 15px 0;
+  color: #B85042; 
+}
+
+h1 {
+  border-bottom: 2px solid #A7BEAE; 
+  padding-bottom: 10px;
+}
+
+.navigation {
+  padding: 10px 0;
+  border-bottom: 1px solid #A7BEAE; 
+  margin-bottom: 20px;
+}
+
+.flash {
+  background: #A7BEAE; 
+  padding: 10px;
+  border: 1px solid #8CA396; 
+  margin-bottom: 20px;
+  color: white; 
+}
+
+.error {
+  background: #B85042; 
+  padding: 10px;
+  border: 1px solid #9C3C30; 
+  margin-bottom: 20px;
+  color: white; 
+}
+
+/* Chat Room Styles */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 200px);
+  background: white;
+  border: 1px solid #A7BEAE;
+  border-radius: 4px;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #A7BEAE;
+  color: white;
+  border-radius: 4px 4px 0 0;
+}
+
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  background: #f9f9f9;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 8px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.message .username {
+  font-weight: bold;
+  color: #B85042;
+  margin-right: 10px;
+}
+
+.message .timestamp {
+  color: #666;
+  font-size: 0.8em;
+  margin-right: 10px;
+}
+
+.message-input {
+  padding: 15px;
+  background: white;
+  border-top: 1px solid #A7BEAE;
+}
+
+.message-input form {
+  display: flex;
+  gap: 10px;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #A7BEAE;
+  border-radius: 4px;
+}
+
+.message-input button {
+  padding: 8px 16px;
+  background: #B85042;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.message-input button:hover {
+  background: #9C3C30;
+}
+
+/* Room List Styles */
+.rooms {
+  list-style: none;
+  padding: 0;
+}
+
+.rooms li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: white;
+  border: 1px solid #A7BEAE;
+  border-radius: 4px;
+}
+
+.room-name {
+  font-weight: bold;
+  color: #B85042;
+}
+
+.room-creator {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.room-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #B85042;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #9C3C30;
+}
+
+.button.delete {
+  background: #B85042;
+}
+
+.button.delete:hover {
+  background: #9C3C30;
+}
+
+/* Form Styles */
+input, textarea {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #A7BEAE;
+  border-radius: 3px;
+}
+
+.actions {
+  margin-top: 15px;
+}
+
+.actions input {
+  background-color: #B85042; 
+  border: none;
+  color: white; 
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  width: auto;
+}
+
+.actions input:hover {
+  background-color: #9C3C30; 
+}
+
+.staff-section, .events-section, .working-events, .available-events, .create-event, .your-events {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #A7BEAE;
+}

@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% block title %}{{ room.name }}{% endblock %}
+{% block body %}
+  <div class="chat-container" 
+       data-room-id="{{ room.id }}"
+       data-last-message-id="{{ messages[-1].id if messages else 0 }}"
+       data-username="{{ g.user.username }}">
+    <div class="chat-header">
+      <h2>{{ room.name }}</h2>
+      <div class="room-actions">
+        <a href="{{ url_for('leave_room') }}" class="button">Leave Room</a>
+      </div>
+    </div>
+
+    <div class="messages-container" id="messages">
+      {% for message in messages %}
+        <div class="message" data-message-id="{{ message.id }}">
+          <span class="username">{{ message.user.username }}</span>
+          <span class="timestamp">{{ message.timestamp.strftime('%H:%M:%S') }}</span>
+          <span class="content">{{ message.content }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="message-input">
+      <form id="message-form">
+        <input type="text" id="message-content" placeholder="Type your message..." required>
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const container = document.querySelector('.chat-container');
+    const initialData = {
+      lastMessageId: parseInt(container.dataset.lastMessageId),
+      roomId: parseInt(container.dataset.roomId),
+      username: container.dataset.username
+    };
+
+    // Function to add a new message to the chat
+    function addMessage(message) {
+      const messagesContainer = document.getElementById('messages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message';
+      messageDiv.dataset.messageId = message.id;
+      
+      const timestamp = new Date(message.timestamp).toLocaleTimeString();
+      
+      messageDiv.innerHTML = `
+        <span class="username">${message.username}</span>
+        <span class="timestamp">${timestamp}</span>
+        <span class="content">${message.content}</span>
+      `;
+      
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Function to fetch new messages
+    async function fetchNewMessages() {
+      try {
+        const response = await fetch(`/api/messages/${initialData.roomId}?last_id=${initialData.lastMessageId}`);
+        if (!response.ok) throw new Error('Failed to fetch messages');
+        
+        const messages = await response.json();
+        for (const message of messages) {
+          addMessage(message);
+          initialData.lastMessageId = Math.max(initialData.lastMessageId, message.id);
+        }
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      }
+    }
+
+    // Function to send a new message
+    async function sendMessage(content) {
+      try {
+        const response = await fetch(`/api/messages/${initialData.roomId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ content }),
+        });
+        
+        if (!response.ok) throw new Error('Failed to send message');
+        
+        const message = await response.json();
+        addMessage(message);
+        initialData.lastMessageId = Math.max(initialData.lastMessageId, message.id);
+      } catch (error) {
+        console.error('Error sending message:', error);
+      }
+    }
+
+    // Handle form submission
+    document.getElementById('message-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const input = document.getElementById('message-content');
+      const content = input.value.trim();
+      
+      if (content) {
+        await sendMessage(content);
+        input.value = '';
+      }
+    });
+
+    // Poll for new messages every second
+    setInterval(fetchNewMessages, 1000);
+  </script>
+{% endblock %} 

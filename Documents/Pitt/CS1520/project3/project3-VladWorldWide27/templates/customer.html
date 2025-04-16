@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}Customer Dashboard{% endblock %}
+{% block body %}
+  <h2>Customer Dashboard</h2>
+  
+  <div class="create-event">
+    <h3>Request a New Event</h3>
+    <form action="{{ url_for('create_event') }}" method="post">
+      <dl>
+        <dt>Date:
+        <dd><input type="date" name="date" required>
+        <dt>Description:
+        <dd><textarea name="description" rows="5" cols="40" required></textarea>
+      </dl>
+      <div class="actions"><input type="submit" value="Schedule Event"></div>
+    </form>
+  </div>
+  
+  <div class="your-events">
+    <h3>Your Scheduled Events</h3>
+    {% if events %}
+      <ul class="events">
+      {% for event in events %}
+        <li>
+          <strong>{{ event.date.strftime('%Y-%m-%d') }}</strong>: {{ event.description }}
+          <br>Staff assigned: {{ event.staff|length }}/3
+          <br><a href="{{ url_for('cancel_event', event_id=event.id) }}">Cancel this event</a>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p><em>You have no events scheduled.</em></p>
+    {% endif %}
+  </div>
+{% endblock %}

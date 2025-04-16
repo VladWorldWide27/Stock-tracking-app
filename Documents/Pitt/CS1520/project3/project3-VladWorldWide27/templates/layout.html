@@ -1,0 +1,21 @@
+<!doctype html>
+<title>{% block title %}Chat Rooms{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<div class="page">
+  <h1>Chat Rooms</h1>
+  <div class="navigation">
+    {% if g.user %}
+      <a href="{{ url_for('index') }}">Home</a> |
+      <a href="{{ url_for('logout') }}">Log out [{{ g.user.username }}]</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Log in</a> |
+      <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+  </div>
+  <div class="body">
+    {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block body %}{% endblock %}
+  </div>
+</div>

@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}Staff Dashboard{% endblock %}
+{% block body %}
+  <h2>Staff Dashboard</h2>
+  
+  <div class="working-events">
+    <h3>Events You're Working</h3>
+    {% if working_events %}
+      <ul class="events">
+      {% for event in working_events %}
+        <li>
+          <strong>{{ event.date.strftime('%Y-%m-%d') }}</strong>: {{ event.description }}
+          <br>Customer: {{ event.customer.username }}
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p><em>You are not currently assigned to any events.</em></p>
+    {% endif %}
+  </div>
+  
+  <div class="available-events">
+    <h3>Available Events to Work</h3>
+    {% if available_events %}
+      <ul class="events">
+      {% for event in available_events %}
+        <li>
+          <strong>{{ event.date.strftime('%Y-%m-%d') }}</strong>: {{ event.description }}
+          <br>Customer: {{ event.customer.username }}
+          <br>Staff assigned: {{ event.staff|length }}/3
+          <br><a href="{{ url_for('signup_event', event_id=event.id) }}">Sign up for this event</a>
+        </li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p><em>There are no events available to sign up for.</em></p>
+    {% endif %}
+  </div>
+{% endblock %}
